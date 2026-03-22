@@ -6,7 +6,7 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(!localStorage.getItem('gemini_api_key'))
   const [sessionState, setSessionState] = useState<'disconnected' | 'connected'>('disconnected')
   const [statusText, setStatusText] = useState(isSettingsOpen ? 'Please set your API Key' : 'Click to begin!')
-  
+
   const tutorRef = useRef<GeminiLiveTutor | null>(null)
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function App() {
     setStatusText('Connecting...')
     const tutor = new GeminiLiveTutor(apiKey)
     tutorRef.current = tutor
-    
+
     tutor.onStateChange = (state, reason) => {
       if (state === 'connected') {
         setSessionState('connected')
@@ -35,7 +35,7 @@ function App() {
         setSessionState('disconnected')
         setStatusText(prev => prev.startsWith('Error') ? prev : 'Click to begin!')
         if (reason && reason !== 'Code: 1000' && reason !== 'Code: 1005') {
-           alert(`WebSocket disconnected: ${reason}`);
+          alert(`WebSocket disconnected: ${reason}`);
         }
       } else {
         setStatusText('Error connecting. Check API key.')
@@ -43,7 +43,7 @@ function App() {
         alert('請檢查你的 VITE_GEMINI_API_KEY 是否設定正確！連線失敗了。')
       }
     }
-    
+
     // Optional: catch text if the model decides to send transcripts
     tutor.onMessage = (text) => {
       console.log('AI:', text)
@@ -54,8 +54,8 @@ function App() {
 
   // Define some playful, child-friendly colors
   const primaryColor = '#FFB84D' // Orange/Yellow for general fun learning
-  const bgGradient = sessionState === 'connected' 
-    ? `linear-gradient(135deg, ${primaryColor}40, #FFF)` 
+  const bgGradient = sessionState === 'connected'
+    ? `linear-gradient(135deg, ${primaryColor}40, #FFF)`
     : 'linear-gradient(135deg, #FFF, #F0F0F0)'
 
   const handleSaveKey = () => {
@@ -76,8 +76,8 @@ function App() {
   }
 
   return (
-    <div style={{ 
-      textAlign: 'center', 
+    <div style={{
+      textAlign: 'center',
       padding: '2rem',
       minHeight: '100vh',
       display: 'flex',
@@ -91,6 +91,7 @@ function App() {
       <h1 style={{ fontSize: '3rem', color: '#333', marginBottom: '2rem', textShadow: '2px 2px 4px rgba(0,0,0,0.1)' }}>
         My Friendly Tutor 🌟
       </h1>
+      <h2>Tony's 美日語小老師</h2>
 
       {isSettingsOpen ? (
         <div style={{ background: 'white', padding: '2rem', borderRadius: '20px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', maxWidth: '400px', width: '90%' }}>
@@ -98,14 +99,14 @@ function App() {
           <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
             這是你個人的金鑰，它只會安全地儲存到目前的瀏覽器 (Local Storage) 中，不用擔心外洩！完成後，你就可以將這個網址分享給設備使用。
           </p>
-          <input 
-            type="password" 
-            value={apiKey} 
-            onChange={(e) => setApiKey(e.target.value)} 
-            placeholder="AIzaSy..." 
+          <input
+            type="password"
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            placeholder="AIzaSy..."
             style={{ width: '100%', boxSizing: 'border-box', padding: '12px', borderRadius: '8px', border: '2px solid #ddd', marginBottom: '1rem', fontSize: '1rem' }}
           />
-          <button 
+          <button
             onClick={handleSaveKey}
             style={{ backgroundColor: '#42D050', color: 'white', border: 'none', padding: '12px 24px', fontSize: '1.1rem', borderRadius: '10px', cursor: 'pointer', width: '100%' }}
           >
@@ -114,18 +115,18 @@ function App() {
         </div>
       ) : (
         <>
-          <div style={{ 
-            padding: '3rem', 
-            borderRadius: '50px', 
+          <div style={{
+            padding: '3rem',
+            borderRadius: '50px',
             backgroundColor: 'white',
             boxShadow: sessionState === 'connected' ? `0 0 30px ${primaryColor}` : '0 10px 20px rgba(0,0,0,0.1)',
             transition: 'all 0.3s ease'
           }}>
-            <button 
+            <button
               onClick={toggleListen}
-              style={{ 
-                padding: '2rem', 
-                fontSize: '3rem', 
+              style={{
+                padding: '2rem',
+                fontSize: '3rem',
                 borderRadius: '50%',
                 width: '180px',
                 height: '180px',
@@ -144,18 +145,18 @@ function App() {
               {sessionState === 'connected' ? '🛑' : '🎤'}
             </button>
           </div>
-          
-          <p style={{ 
-            marginTop: '2rem', 
-            fontSize: '2rem', 
-            color: '#444', 
+
+          <p style={{
+            marginTop: '2rem',
+            fontSize: '2rem',
+            color: '#444',
             fontWeight: 'bold',
           }}>
             {statusText}
           </p>
 
           {!isSettingsOpen && sessionState === 'disconnected' && (
-            <button 
+            <button
               onClick={handleClearKey}
               style={{ marginTop: '3rem', background: 'transparent', border: 'none', color: '#888', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
             >
