@@ -6,6 +6,7 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(!localStorage.getItem('gemini_api_key'))
   const [sessionState, setSessionState] = useState<'disconnected' | 'connected'>('disconnected')
   const [statusText, setStatusText] = useState(isSettingsOpen ? 'Please set your API Key' : 'Click to begin!')
+  const [waitingForModel, setWaitingForModel] = useState(false)
 
   const tutorRef = useRef<GeminiLiveTutor | null>(null)
 
@@ -47,6 +48,10 @@ function App() {
     // Optional: catch text if the model decides to send transcripts
     tutor.onMessage = (text) => {
       console.log('AI:', text)
+    }
+
+    tutor.onTurnComplete = () => {
+      setWaitingForModel(false)
     }
 
     await tutor.start()
@@ -120,7 +125,11 @@ function App() {
             borderRadius: '50px',
             backgroundColor: 'white',
             boxShadow: sessionState === 'connected' ? `0 0 30px ${primaryColor}` : '0 10px 20px rgba(0,0,0,0.1)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '1.5rem'
           }}>
             <button
               onClick={toggleListen}
@@ -144,6 +153,40 @@ function App() {
             >
               {sessionState === 'connected' ? '🛑' : '🎤'}
             </button>
+
+            {sessionState === 'connected' && (
+              <button
+                disabled={waitingForModel}
+                onClick={() => {
+                  setWaitingForModel(true)
+                  tutorRef.current?.sendAudioStreamEnd()
+                }}
+                style={{
+                  padding: '1.5rem 3rem',
+                  fontSize: '2rem',
+                  borderRadius: '30px',
+                  backgroundColor: waitingForModel ? '#B0BEC5' : '#4FC3F7',
+                  color: 'white',
+                  border: 'none',
+                  cursor: waitingForModel ? 'not-allowed' : 'pointer',
+                  boxShadow: waitingForModel ? '0 6px 0 #78909C' : '0 6px 0 #0288D1',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontWeight: 'bold',
+                  transition: 'all 0.2s ease',
+                  opacity: waitingForModel ? 0.7 : 1,
+                }}
+                onMouseDown={(e) => !waitingForModel && (e.currentTarget.style.transform = 'translateY(3px)')}
+                onMouseUp={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+                onTouchStart={(e) => !waitingForModel && (e.currentTarget.style.transform = 'translateY(3px)')}
+                onTouchEnd={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+              >
+                <span style={{ fontSize: '3.5rem', lineHeight: 1 }}>{waitingForModel ? '⏳' : '🙋‍♂️'}</span>
+                <span>{waitingForModel ? '老師在想...' : '我說完了！'}</span>
+              </button>
+            )}
           </div>
 
           <p style={{

@@ -9,6 +9,7 @@ export class GeminiLiveTutor {
   
   public onMessage: ((text: string) => void) | null = null;
   public onStateChange: ((state: 'connected' | 'disconnected' | 'error', reason?: string) => void) | null = null;
+  public onTurnComplete: (() => void) | null = null;
 
   constructor(private apiKey: string) {}
 
@@ -56,6 +57,9 @@ export class GeminiLiveTutor {
             }
           }
         }
+        if (data.serverContent?.turnComplete) {
+          this.onTurnComplete?.();
+        }
       } catch (err) {
         console.error('Failed to parse WebSocket message:', err);
       }
@@ -81,6 +85,16 @@ export class GeminiLiveTutor {
     }
     this.onStateChange?.('disconnected');
     this.playbackQueueTime = 0;
+  }
+
+  public sendAudioStreamEnd() {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify({
+        realtimeInput: {
+          audioStreamEnd: true
+        }
+      }));
+    }
   }
 
   private sendSetup() {
