@@ -1,60 +1,60 @@
 # My Friendly Tutor 🌟 (Tony's 美日語小老師)
 
-English | [繁體中文](./README.zh-TW.md)
+[English](./README.en.md) | 繁體中文
 
-A fun, interactive, and bilingual (English & Japanese) voice tutor application for children, powered by the **Gemini Live API**.
+一個專為兒童設計、有趣且互動的雙語（英文與日文）語音家教應用程式，由 **Gemini Live API** 驅動。
 
-Using the cutting-edge `gemini-2.5-flash-native-audio-latest` model via WebSocket, this app provides a real-time conversational experience. Kids can speak in traditional Chinese, and the AI tutor will respond verbally, teaching them English and Japanese words in an encouraging and playful way.
+使用最先進的 `gemini-2.5-flash-native-audio-latest` 模型與 WebSocket 雙向語音連線技術，這個應用程式提供了即時的對話體驗。小朋友可以使用繁體中文與 AI 老師說話，AI 老師會以語音回覆，用鼓勵、活潑的方式教導他們英文和日文單字。
 
-## ✨ Features
+## ✨ 特色
 
-- **🎙️ Real-time Voice Interaction:** Talk directly to the AI tutor and hear spoken responses instantly using WebSockets and the Web Audio API. 
-- **🌍 Bilingual Education:** Specially prompted for 6-year-old children to learn English and Japanese through a friendly, traditional Chinese interface.
-- **🔒 Secure API Key Storage:** Your Gemini API key is stored securely in your browser's local storage—never sent to any middleman server.
-- **🎨 Child-friendly UI:** A colorful, playful interface with pulsing animations that indicate when the microphone is active.
+- **🎙️ 即時語音互動：** 直接對著 AI 老師說話，透過 WebSocket 和 Web Audio API 即時聽到語音回覆。
+- **🌍 雙語教育：** 特別為 6 歲兒童設計的 Prompt，透過友善的繁體中文介面學習英文和日文。
+- **🔒 安全的金鑰儲存：** 您的 Gemini API 金鑰會安全地儲存在您瀏覽器的 `localStorage` 中——不會傳送到任何第三方伺服器。
+- **🎨 兒童友善介面：** 色彩鮮豔、充滿趣味的介面，當麥克風啟用時會有呼吸燈動畫提示。
 
-## 🛠️ Technology Stack
+## 🛠️ 技術棧
 
-- **Frontend Framework:** React 18, Vite, TypeScript
-- **AI Integration:** Google Gemini Live API (`GenerativeService.BidiGenerateContent`)
-- **Audio Processing:** Native Web Audio API (`AudioContext`, `MediaStream`, `ScriptProcessorNode`)
-- **Real-time Communication:** WebSockets
+- **前端框架：** React 18, Vite, TypeScript
+- **AI 整合：** Google Gemini Live API (`GenerativeService.BidiGenerateContent`)
+- **音訊處理：** 瀏覽器原生 Web Audio API (`AudioContext`, `MediaStream`, `ScriptProcessorNode`)
+- **即時通訊：** WebSockets
 
-## 🚀 Getting Started
+## 🚀 快速開始
 
-### Prerequisites
+### 系統需求
 
-- Node.js installed on your machine.
-- A [Google Gemini API Key](https://aistudio.google.com/). You need access to the `gemini-2.5-flash-native-audio-latest` model.
+- 電腦已安裝 [Node.js](https://nodejs.org/)。
+- 擁有一個 [Google Gemini API Key](https://aistudio.google.com/)。您需要有權限存取 `gemini-2.5-flash-native-audio-latest` 模型。
 
-### Installation
+### 安裝步驟
 
-1. Clone the repository and navigate to the project directory:
+1. 複製此專案到您的電腦並進入專案目錄：
    ```bash
    cd synthetic-meteor
    ```
 
-2. Install dependencies:
+2. 安裝必要的套件：
    ```bash
    npm install
    ```
 
-3. Start the Vite development server:
+3. 啟動 Vite 開發伺服器：
    ```bash
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173` (or the port specified by Vite).
+4. 打開瀏覽器並前往 `http://localhost:5173`（或 Vite 顯示的網址）。
 
-## 💡 How to Use
+## 💡 使用說明
 
-1. **Set API Key:** When you first load the app, paste your Gemini API Key into the setting box. Click **儲存並開始！🚀**. The key will save to your browser's `localStorage`.
-2. **Start the Session:** Click the large pulsing microphone button (🎤) to connect to the Gemini Live service. Make sure to allow microphone permissions if prompted by your browser.
-3. **Talk & Learn:** Once connected (🛑), speak into your microphone! Ask the tutor how to say words in English or Japanese.
-4. **End Session:** Click the stop button (🛑) to disconnect the WebSocket session.
+1. **設定 API 金鑰：** 當您第一次開啟應用程式時，請將您的 Gemini API 金鑰貼到設定框中，然後點擊 **儲存並開始！🚀**。金鑰會保存在您瀏覽器的本機儲存空間中。
+2. **開始課程：** 點擊畫面上閃爍的麥克風按鈕（🎤）來連接 Gemini Live 服務。如果瀏覽器要求麥克風權限，請選擇允許。
+3. **說話與學習：** 當連接成功後（圖示變成 🛑），請對著麥克風說話！您可以問老師某個東西的英文或日文怎麼說。
+4. **結束課程：** 點擊停止按鈕（🛑）即可斷開 WebSocket 連線並結束課程。
 
-*Note: You can clear or change your API key at any time by clicking "清除/更換 API 金鑰" on the main screen when disconnected.*
+*註：當處於未連線狀態時，您可以隨時點擊主畫面下方的「清除/更換 API 金鑰」來修改您的金鑰設定。*
 
-## 📄 License
+## 📄 授權
 
-This project is created for educational and demonstration purposes.
+本專案僅供教育與展示用途。

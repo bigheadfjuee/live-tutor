@@ -1,6 +1,6 @@
 # My Friendly Tutor 🌟 (Tony's 美日語小老師)
 
-[English](./README.md) | 繁體中文
+[English](./README.en.md) | 繁體中文
 
 一個專為兒童設計、有趣且互動的雙語（英文與日文）語音家教應用程式，由 **Gemini Live API** 驅動。
 
